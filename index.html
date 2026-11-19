@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AETHER RELIQUARY — 星渊圣匣 | Interactive 3D Celestial Experience</title>
+    <script type="module" crossorigin src="./assets/index-COa8PqoZ.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-Bkp-hnIw.css">
+  </head>
+  <body>
+    <div id="canvas-container"></div>
+
+    <!-- Subtle Intro Curtain -->
+    <div id="intro-curtain" class="intro-curtain">
+      <div class="intro-inner">
+        <div class="intro-eyebrow">CELESTIAL OBSERVATORY · ARCHIVE IV</div>
+        <h1 class="intro-title">AETHER RELIQUARY</h1>
+        <div class="intro-subtitle">星 渊 圣 匣 · 浑 天 奇 点</div>
+        <div class="intro-loader">
+          <div id="intro-bar" class="intro-bar"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Editorial Luxury HUD -->
+    <div id="hud" class="hud">
+      <!-- Top Bar -->
+      <header class="hud-top">
+        <div class="brand-block">
+          <div class="brand-mark">
+            <span class="mark-ring"></span>
+            <span class="mark-core"></span>
+          </div>
+          <div>
+            <div class="brand-eyebrow">ASTRAL MECHANICA // 65,536 GPGPU FLUX</div>
+            <div class="brand-title">AETHER RELIQUARY <span class="brand-cn">星渊圣匣</span></div>
+          </div>
+        </div>
+
+        <div class="telemetry-strip">
+          <div class="telemetry-item">
+            <span class="tel-label">SINGULARITY</span>
+            <span id="tel-flux" class="tel-value">1.000 Ψ</span>
+          </div>
+          <div class="telemetry-divider"></div>
+          <div class="telemetry-item">
+            <span class="tel-label">DISPERSION</span>
+            <span id="tel-ior" class="tel-value">IOR 1.58</span>
+          </div>
+          <div class="telemetry-divider"></div>
+          <div class="telemetry-item">
+            <span class="tel-label">PARTICLES</span>
+            <span class="tel-value">65,536 GPU</span>
+          </div>
+          <div class="telemetry-divider"></div>
+          <div class="telemetry-item">
+            <span class="tel-label">FRAME</span>
+            <span id="tel-fps" class="tel-value">60 FPS</span>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <button id="btn-audio" class="icon-pill" title="切换星渊空间音效 (M)">
+            <span class="sound-bars" id="sound-bars">
+              <i></i><i></i><i></i><i></i>
+            </span>
+            <span id="audio-label">SOUND OFF</span>
+          </button>
+          <button id="btn-lab" class="icon-pill" title="光学与流场参数调校 (L)">
+            <span>OPTICS LAB</span>
+          </button>
+          <button id="btn-hide-hud" class="icon-pill icon-only" title="纯净影院模式 (H)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Left Singularity Charge Meter -->
+      <aside class="charge-rail">
+        <div class="charge-label">CONVERGENCE</div>
+        <div class="charge-track">
+          <div id="charge-fill" class="charge-fill"></div>
+        </div>
+        <div id="charge-pct" class="charge-pct">00%</div>
+      </aside>
+
+      <!-- Right Collapsible Optics Lab Drawer -->
+      <aside id="optics-panel" class="optics-panel hidden">
+        <div class="panel-header">
+          <span>OPTICS &amp; FIELD LAB · 光学调校</span>
+          <button id="btn-close-lab" class="panel-close">✕</button>
+        </div>
+
+        <div class="control-row">
+          <div class="control-meta">
+            <span>奇点湍流 · Core Turbulence</span>
+            <span id="val-turbulence">1.00</span>
+          </div>
+          <input id="slider-turbulence" type="range" min="0.2" max="2.2" step="0.01" value="1.0" />
+        </div>
+
+        <div class="control-row">
+          <div class="control-meta">
+            <span>晶壳开合 · Crystal Aperture</span>
+            <span id="val-aperture">0.35</span>
+          </div>
+          <input id="slider-aperture" type="range" min="0.0" max="1.2" step="0.01" value="0.35" />
+        </div>
+
+        <div class="control-row">
+          <div class="control-meta">
+            <span>棱镜色散 · Prism Dispersion</span>
+            <span id="val-dispersion">5.50</span>
+          </div>
+          <input id="slider-dispersion" type="range" min="0.0" max="10.0" step="0.1" value="5.5" />
+        </div>
+
+        <div class="control-row">
+          <div class="control-meta">
+            <span>星尘涡流 · Curl Vortex</span>
+            <span id="val-vortex">1.00</span>
+          </div>
+          <input id="slider-vortex" type="range" min="0.2" max="2.2" step="0.01" value="1.0" />
+        </div>
+
+        <div class="control-row">
+          <div class="control-meta">
+            <span>电影辉光 · Cinematic Bloom</span>
+            <span id="val-bloom">0.48</span>
+          </div>
+          <input id="slider-bloom" type="range" min="0.15" max="1.25" step="0.01" value="0.48" />
+        </div>
+
+        <div class="control-row">
+          <div class="control-meta">
+            <span>星环转速 · Gimbal Tempo</span>
+            <span id="val-tempo">1.00</span>
+          </div>
+          <input id="slider-tempo" type="range" min="0.0" max="2.5" step="0.01" value="1.0" />
+        </div>
+      </aside>
+
+      <!-- Bottom Dock -->
+      <footer class="hud-bottom">
+        <!-- Realm Selector -->
+        <div class="dock-group">
+          <div class="dock-caption">REALM · 意境</div>
+          <div class="pill-strip" id="realm-buttons">
+            <button class="dock-btn active" data-realm="0">
+              <span class="btn-idx">I</span>苍穹鎏金
+            </button>
+            <button class="dock-btn" data-realm="1">
+              <span class="btn-idx">II</span>深渊幽蓝
+            </button>
+            <button class="dock-btn" data-realm="2">
+              <span class="btn-idx">III</span>日冕黑曜
+            </button>
+            <button class="dock-btn" data-realm="3">
+              <span class="btn-idx">IV</span>虹彩圣晶
+            </button>
+          </div>
+        </div>
+
+        <!-- Center Singularity Pulse Trigger -->
+        <button id="btn-pulse" class="pulse-trigger" title="长按蓄能坍缩，松开释放超新星冲击波 (Space)">
+          <span class="pulse-halo"></span>
+          <span class="pulse-core-dot"></span>
+          <span class="pulse-text">HOLD · 奇点蓄能脉冲</span>
+        </button>
+
+        <!-- Camera Preset Selector -->
+        <div class="dock-group">
+          <div class="dock-caption">CAMERA · 机位</div>
+          <div class="pill-strip" id="camera-buttons">
+            <button class="dock-btn active" data-cam="0">圣殿全景</button>
+            <button class="dock-btn" data-cam="1">奇点微距</button>
+            <button class="dock-btn" data-cam="2">天顶星盘</button>
+            <button class="dock-btn" data-cam="3">掠水仰视</button>
+          </div>
+        </div>
+      </footer>
+
+      <!-- Subtle Gesture Hint -->
+      <div class="gesture-hint">
+        <span>拖拽自由环绕</span> · <span>滚轮微距推进</span> · <span>悬停牵引 65K 粒子与晶壳</span> · <span>静止长按 / 空格键 释放超新星脉冲</span>
+      </div>
+    </div>
+
+    <!-- Restore HUD Floating Button in Pure Cinema Mode -->
+    <button id="btn-restore-hud" class="restore-hud hidden" title="恢复界面 (H)">
+      SHOW HUD [H]
+    </button>
+
+  </body>
+</html>
